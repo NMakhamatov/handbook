@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.devgroup.handbook.employee.EmployeeEntity;
+import org.devgroup.handbook.employee.model.EmployeeEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -36,4 +36,34 @@ public class DepartmentEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_department")
     private DepartmentEntity parentDepartment;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+
+
+    public EmployeeEntity getHeadEmployee() {
+        return headEmployee;
+    }
+
+    public void setHeadEmployee(EmployeeEntity headEmployee) {
+        this.headEmployee = headEmployee;
+    }
+
+    public DepartmentEntity getParentDepartment() {
+        return parentDepartment;
+    }
+
+    public void setParentDepartment(DepartmentEntity parentDepartment) {
+        this.parentDepartment = parentDepartment;
+    }
 }

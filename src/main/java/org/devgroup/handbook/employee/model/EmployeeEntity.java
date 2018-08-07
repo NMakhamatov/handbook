@@ -1,4 +1,4 @@
-package org.devgroup.handbook.employee;
+package org.devgroup.handbook.employee.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -68,4 +68,7 @@ public class EmployeeEntity {
     @Column(name = "salary", nullable = false)
     private BigDecimal salary;
 
+    public long getId() {
+        return id;
+    }
 }

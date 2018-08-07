@@ -1,4 +1,4 @@
-package org.devgroup.handbook.dto.Request;
+package org.devgroup.handbook.employee.view;
 
 import lombok.*;
 import org.devgroup.handbook.dto.Certificate;

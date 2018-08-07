@@ -1,56 +1,62 @@
 package org.devgroup.handbook.department.dao;
 
 import org.devgroup.handbook.department.model.DepartmentEntity;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.devgroup.handbook.util.EntityDao;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
+
 @Repository
-public class DepartmentEntityDaoImpl  implements DepartmentEntityDao {
+public class DepartmentEntityDaoImpl  implements EntityDao<DepartmentEntity,Long> {
+    private final EntityManager entityManager ;
 
-
-
-
-    @Override
-    public DepartmentEntity getDepartmentById(Long id) {
-        return null;
+    @Autowired
+    public DepartmentEntityDaoImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     @Override
-    public void update(DepartmentEntity department) {
-
+    public List<DepartmentEntity> getAll() {
+       return entityManager.createQuery("from DepartmentEntity", DepartmentEntity.class).getResultList();
     }
 
     @Override
-    public void save(DepartmentEntity department) {
-
+    public DepartmentEntity getEntityById(Long id) {
+        return entityManager.find(DepartmentEntity.class, id);
     }
 
     @Override
-    public void delete(Long id) {
-
-    }
-
-    @Override
-    public List<DepartmentEntity> getSubDepartment(Long id) {
-        return null;
-    }
-
-    @Override
-    public void openSession() {
+    @Transactional
+    public void update(DepartmentEntity entity) {
+        entityManager.merge(entity);
+        entityManager.flush();
 
     }
 
     @Override
-    public void closeSession() {
+    @Transactional
+    public void delete(DepartmentEntity entity) {
+        DepartmentEntity departmentEntity = entityManager.getReference(DepartmentEntity.class, entity.getId());
+        entityManager.remove(departmentEntity);
+        entityManager.flush();
 
     }
 
     @Override
-    public Session getCurrentSession() {
-        return null;
+    @Transactional
+    public Long create(DepartmentEntity entity) {
+        entityManager.persist(entity);
+         return  entity.getId();
+    }
+
+    @Override
+    public <T> TypedQuery<T> getWithCriteria(CriteriaQuery<T> criteriaQuery) {
+        return entityManager.createQuery(criteriaQuery);
     }
 }

@@ -2,35 +2,44 @@ package org.devgroup.handbook.department.service;
 
 import org.devgroup.handbook.department.model.DepartmentEntity;
 import org.devgroup.handbook.department.view.CreateView;
-import org.devgroup.handbook.department.view.UpdateView;
+import org.devgroup.handbook.department.view.Reassignment;
+import org.devgroup.handbook.employee.model.EmployeeEntity;
+import org.devgroup.handbook.util.EntityDao;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class DepartmentEntityServiceImpl implements DepartmentEntityService {
+    private EntityDao<DepartmentEntity,Long> depdao;
+
     @Override
-    public DepartmentEntity searchDepartmentById(Long id) {
+    public void closeDepartment(long id) {
+
+    }
+
+    @Override
+    public List<DepartmentEntity> searchListBranches(long id) {
         return null;
     }
 
     @Override
-    public void createDepartment(CreateView createView) {
+    public Long createDepartment(CreateView createDepartmentRequest) {
+        return null;
+    }
+
+    @Override
+    public void reassignDepartment(Reassignment reassignmentRequest) {
 
     }
 
     @Override
-    public void reassignDepartment(UpdateView updateView) {
-
+    public List<EmployeeEntity> getListEmployeeOfDepartment(long id) {
+        return null;
     }
 
     @Override
-    public void closeDepartment(Long id) {
-
-    }
-
-    @Override
-    public List<DepartmentEntity> getSubDepartments(Long parentId) {
+    public DepartmentEntity searchDepartmentById(long id) {
         return null;
     }
 }

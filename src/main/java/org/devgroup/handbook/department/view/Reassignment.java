@@ -1,4 +1,4 @@
-package org.devgroup.handbook.dto.Request;
+package org.devgroup.handbook.department.view;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

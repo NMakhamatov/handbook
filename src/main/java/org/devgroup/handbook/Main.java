@@ -1,6 +1,6 @@
 package org.devgroup.handbook;
 
-import org.devgroup.handbook.service.EmployeeServiceImpl;
+//import org.devgroup.handbook.service.EmployeeEntityServiceImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -12,10 +12,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @PropertySource({"classpath:application.yml"})
 public class Main {
 
-    @Bean
-    public EmployeeServiceImpl getEmployeeService(){
-        return new EmployeeServiceImpl();
-    }
 
     public static void main(String[] args) {
         SpringApplication.run(Main.class);

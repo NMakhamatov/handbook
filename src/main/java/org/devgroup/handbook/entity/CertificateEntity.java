@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.devgroup.handbook.employee.EmployeeEntity;
+import org.devgroup.handbook.employee.model.EmployeeEntity;
 
 import javax.persistence.*;
 import java.sql.Blob;

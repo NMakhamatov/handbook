@@ -4,6 +4,7 @@ package org.devgroup.handbook.department.controller;
 import org.devgroup.handbook.department.model.DepartmentEntity;
 import org.devgroup.handbook.department.service.DepartmentEntityService;
 import org.devgroup.handbook.department.view.CreateView;
+import org.devgroup.handbook.department.view.Reassignment;
 import org.devgroup.handbook.department.view.UpdateView;
 
 
@@ -53,8 +54,8 @@ public class DepartmentEntityControllerImpl implements DepartmentEntityControlle
 
     @Override
     @PutMapping(value = "/reassignDepartment")
-    public ResponseEntity reassignDepartment(UpdateView updateView) {
-        departmentService.reassignDepartment(updateView);
+    public ResponseEntity reassignDepartment(Reassignment reassignment) {
+        departmentService.reassignDepartment(reassignment);
         return new ResponseEntity<>(new CustomSuccessResponse(),HttpStatus.OK);
     }
 }
