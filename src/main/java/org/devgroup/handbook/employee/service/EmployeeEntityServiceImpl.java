@@ -11,15 +11,16 @@ import org.devgroup.handbook.employee.view.response.CreateResponse;
 import org.devgroup.handbook.exception.EmployeeException;
 import org.devgroup.handbook.position.dao.PositionDaoImpl;
 import org.devgroup.handbook.position.model.PositionEntity;
+import org.devgroup.handbook.util.EntityDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EmployeeEntityServiceImpl implements EmployeeEntityService{
 
-    private EmployeeEntityDaoImpl employeeDao;
-    private PositionDaoImpl positionDao;
-    private DepartmentEntityDaoImpl departmentDao;
+    private EntityDao<EmployeeEntity,Long> employeeDao;
+    private EntityDao<PositionEntity,Long> positionDao;
+    private EntityDao<DepartmentEntity,Long> departmentDao;
 
     @Autowired
     public EmployeeEntityServiceImpl(EmployeeEntityDaoImpl employeeDao) {
