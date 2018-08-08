@@ -10,7 +10,7 @@ public interface EmployeeEntityService {
 
     void transferEmployee(TransferEmployee transferEmployeeRequest);
 
-    String changeEmployee(ChangeEmployee changeEmployeeRequest);
+    void changeEmployee(ChangeEmployee changeEmployeeRequest);
 
     void removeEmployee(long id);
 }

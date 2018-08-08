@@ -3,12 +3,14 @@ package org.devgroup.handbook.employee.dao;
 import org.devgroup.handbook.employee.model.EmployeeEntity;
 import org.devgroup.handbook.util.EntityDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
+@Repository
 public class EmployeeEntityDaoImpl implements EntityDao<EmployeeEntity,Long>{
     private final EntityManager entityManager;
 

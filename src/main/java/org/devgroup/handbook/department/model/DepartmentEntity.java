@@ -28,7 +28,6 @@ public class DepartmentEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @NotNull
     @OneToOne
     @JoinColumn(name = "head", referencedColumnName = "id")
     private EmployeeEntity headEmployee;

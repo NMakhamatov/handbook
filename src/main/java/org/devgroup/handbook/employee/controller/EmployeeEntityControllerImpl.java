@@ -29,7 +29,6 @@ public class EmployeeEntityControllerImpl implements EmployeeEntityController {
        CreateResponse createResponse = employeeService.createEmployee(createEmployeeRequest);
         CustomDataOut<CreateResponse> dataOut = new CustomDataOut<>(createResponse);
         return  new ResponseEntity<CustomDataOut>(dataOut, HttpStatus.OK);
-
     }
 
     @Override

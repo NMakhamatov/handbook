@@ -1,4 +1,4 @@
-package org.devgroup.handbook.entity;
+package org.devgroup.handbook.certificate.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
