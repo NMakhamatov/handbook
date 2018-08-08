@@ -5,7 +5,7 @@ import org.devgroup.handbook.department.model.DepartmentEntity;
 import org.devgroup.handbook.department.service.DepartmentEntityService;
 import org.devgroup.handbook.department.view.CreateView;
 import org.devgroup.handbook.department.view.Reassignment;
-import org.devgroup.handbook.department.view.UpdateView;
+
 
 
 import org.devgroup.handbook.util.CustomDataOut;
@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "api/department/")
@@ -43,13 +45,16 @@ public class DepartmentEntityControllerImpl implements DepartmentEntityControlle
     @Override
     @DeleteMapping(value = "/{id}")
     public ResponseEntity closeDepartment(@PathVariable Long id) {
-        return null;
+       departmentService.closeDepartment(id);
+        return new ResponseEntity<>(new CustomSuccessResponse(),HttpStatus.OK);
     }
 
     @Override
     @GetMapping(value = "/{parentId}")
     public ResponseEntity<CustomDataOut> getSubDepartments(@PathVariable Long parentId) {
-        return null;
+      List<DepartmentEntity> listBranches =  departmentService.searchListBranches(parentId);
+      CustomDataOut<List<DepartmentEntity>> dataOut = new CustomDataOut<>(listBranches);
+        return new ResponseEntity<CustomDataOut>(dataOut,HttpStatus.OK);
     }
 
     @Override

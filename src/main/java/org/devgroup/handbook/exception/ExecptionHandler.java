@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class ExecptionHandler extends ResponseEntityExceptionHandler {
     private final Logger log = LoggerFactory.getLogger(ExceptionHandler.class);
 
+
     @ExceptionHandler({EmployeeException.class, DepartmentException.class})
     protected @ResponseBody
     ResponseEntity<?> handleAllCustomExceptions(RuntimeException e) {
@@ -33,7 +34,7 @@ public class ExecptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(new CustomErrorResponse(e.getLocalizedMessage()), HttpStatus.NOT_FOUND);
     }
 
-
+    @Override
     protected ResponseEntity handleMethodArgumentNotValid(MethodArgumentNotValidException e, HttpHeaders headers, HttpStatus status, WebRequest request) {
         log.error(e.getMessage(), e.getCause());
         StringBuilder sb = new StringBuilder();
