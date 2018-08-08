@@ -3,18 +3,18 @@ package org.devgroup.handbook.employee.service;
 import org.devgroup.handbook.employee.view.ChangeEmployee;
 import org.devgroup.handbook.employee.view.CreateEmployee;
 import org.devgroup.handbook.employee.view.TransferEmployee;
+import org.devgroup.handbook.employee.view.response.CreateResponse;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EmployeeEntityServiceImpl implements EmployeeEntityService{
     @Override
-    public String createEmployee(CreateEmployee createEmployeeRequest) {
+    public CreateResponse createEmployee(CreateEmployee createEmployeeRequest) {
         return null;
     }
 
     @Override
-    public String transferEmployee(TransferEmployee transferEmployeeRequest) {
-        return null;
+    public void transferEmployee(TransferEmployee transferEmployeeRequest) {
     }
 
     @Override

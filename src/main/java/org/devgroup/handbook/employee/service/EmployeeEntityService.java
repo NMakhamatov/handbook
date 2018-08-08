@@ -3,11 +3,12 @@ package org.devgroup.handbook.employee.service;
 import org.devgroup.handbook.employee.view.ChangeEmployee;
 import org.devgroup.handbook.employee.view.CreateEmployee;
 import org.devgroup.handbook.employee.view.TransferEmployee;
+import org.devgroup.handbook.employee.view.response.CreateResponse;
 
 public interface EmployeeEntityService {
-    String createEmployee(CreateEmployee createEmployeeRequest);
+    CreateResponse createEmployee(CreateEmployee createEmployeeRequest);
 
-    String transferEmployee(TransferEmployee transferEmployeeRequest);
+    void transferEmployee(TransferEmployee transferEmployeeRequest);
 
     String changeEmployee(ChangeEmployee changeEmployeeRequest);
 

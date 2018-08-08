@@ -3,16 +3,16 @@ package org.devgroup.handbook.employee.controller;
 import org.devgroup.handbook.employee.view.ChangeEmployee;
 import org.devgroup.handbook.employee.view.CreateEmployee;
 import org.devgroup.handbook.employee.view.TransferEmployee;
+import org.springframework.http.ResponseEntity;
 
-import javax.xml.ws.Response;
 
 public interface EmployeeEntityController {
-    Response createEmployee(CreateEmployee createEmployeeRequest);
+    ResponseEntity createEmployee(CreateEmployee createEmployeeRequest);
 
-    Response transferEmployee(TransferEmployee transferEmployeeRequest);
+    ResponseEntity transferEmployee(TransferEmployee transferEmployeeRequest);
 
-    Response changeEmployee(ChangeEmployee changeEmployeeRequest);
+    ResponseEntity changeEmployee(ChangeEmployee changeEmployeeRequest);
 
-    Response removeEmployee(Long id);
+    ResponseEntity removeEmployee(Long id);
 
 }
