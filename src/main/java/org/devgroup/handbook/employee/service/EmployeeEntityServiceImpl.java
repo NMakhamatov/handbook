@@ -83,8 +83,10 @@ public class EmployeeEntityServiceImpl implements EmployeeEntityService{
     }
 
     @Override
+    @Transactional
     public void transferEmployee(TransferEmployee transferEmployeeRequest) {
-        DepartmentEntity dep = departmentDao.getEntityById(transferEmployeeRequest.getDepIdFrom());
+//        DepartmentEntity dep = departmentDao.getEntityById(transferEmployeeRequest.getDepIdFrom());
+        DepartmentEntity dep = departmentDao.getEntityById(transferEmployeeRequest.getDepIdTo());
         EmployeeEntity employee = employeeDao.getEntityById(transferEmployeeRequest.getEmployeeId());
         employee.setDepartment(dep);
         employeeDao.update(employee);
