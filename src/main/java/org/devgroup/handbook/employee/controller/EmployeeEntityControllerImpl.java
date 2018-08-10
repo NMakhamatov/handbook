@@ -1,8 +1,10 @@
 package org.devgroup.handbook.employee.controller;
 
+import org.devgroup.handbook.employee.model.EmployeeEntity;
 import org.devgroup.handbook.employee.service.EmployeeEntityService;
 import org.devgroup.handbook.employee.view.ChangeEmployee;
 import org.devgroup.handbook.employee.view.CreateEmployee;
+import org.devgroup.handbook.employee.view.EmployeeDto;
 import org.devgroup.handbook.employee.view.TransferEmployee;
 import org.devgroup.handbook.employee.view.response.CreateResponse;
 import org.devgroup.handbook.util.CustomDataOut;
@@ -21,6 +23,24 @@ public class EmployeeEntityControllerImpl implements EmployeeEntityController {
     @Autowired
     public EmployeeEntityControllerImpl(EmployeeEntityService employeeService) {
         this.employeeService = employeeService;
+    }
+
+    @Override
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<CustomDataOut> findById(@PathVariable Long id) {
+        EmployeeEntity employee = employeeService.findById(id);
+
+        EmployeeDto dto = new EmployeeDto();
+        dto.setId(employee.getId());
+        dto.setName(employee.getName());
+        dto.setSurName(employee.getSurname());
+        if (employee.getPatronymic() != null) dto.setMiddleName(employee.getPatronymic());
+        dto.setBirthDate(employee.getBirthDate().toString());
+        dto.setDepartmentName(employee.getDepartment().getName());
+        dto.setPositionName(employee.getPosition().getName());
+
+        CustomDataOut<EmployeeDto> dataOut = new CustomDataOut<>(dto);
+        return new ResponseEntity<CustomDataOut>(dataOut,HttpStatus.OK);
     }
 
     @Override

@@ -28,6 +28,11 @@ public class EmployeeEntityServiceImpl implements EmployeeEntityService{
     }
 
     @Override
+    public EmployeeEntity findById(Long id) {
+        return employeeDao.getEntityById(id);
+    }
+
+    @Override
     public CreateResponse createEmployee(CreateEmployee createEmployeeRequest) {
         String exceptionText = "";
         if ((createEmployeeRequest.getName()) == null) exceptionText+="Имя не введено; ";

@@ -7,6 +7,9 @@ import org.springframework.http.ResponseEntity;
 
 
 public interface EmployeeEntityController {
+
+    ResponseEntity findById(Long id);
+
     ResponseEntity createEmployee(CreateEmployee createEmployeeRequest);
 
     ResponseEntity transferEmployee(TransferEmployee transferEmployeeRequest);
