@@ -1,33 +1,33 @@
 package org.devgroup.handbook.department.view;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+//import lombok.AllArgsConstructor;
+//import lombok.Builder;
+//import lombok.Data;
+//import lombok.NoArgsConstructor;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+//@Data
+//@Builder
+//@AllArgsConstructor
+//@NoArgsConstructor
 public class Reassignment {
 
-    private long idDepToReassign;
+    private long dep;
 
-    private long idNewParentDep;
+    private long newParId;
 
-    public long getIdDepToReassign() {
-        return idDepToReassign;
+    public long getDep() {
+        return dep;
     }
 
-    public void setIdDepToReassign(long idDepToReassign) {
-        this.idDepToReassign = idDepToReassign;
+    public void setDep(long dep) {
+        this.dep = dep;
     }
 
-    public long getIdNewParentDep() {
-        return idNewParentDep;
+    public long getNewParId() {
+        return newParId;
     }
 
-    public void setIdNewParentDep(long idNewParentDep) {
-        this.idNewParentDep = idNewParentDep;
+    public void setNewParId(long newParId) {
+        this.newParId = newParId;
     }
 }

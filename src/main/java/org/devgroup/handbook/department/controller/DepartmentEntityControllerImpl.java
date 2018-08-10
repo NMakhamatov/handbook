@@ -31,6 +31,7 @@ public class DepartmentEntityControllerImpl implements DepartmentEntityControlle
     @Override
     @PostMapping(value = "/save")
     public ResponseEntity createDepartment(@RequestBody CreateView createView) {
+        System.out.println("КОНТРОЛЛЕР: СОЗДАНИЕ НОВОГО ОТДЕЛА");
         departmentService.createDepartment(createView);
         return new ResponseEntity<>(new CustomSuccessResponse(), HttpStatus.OK);
     }
@@ -54,6 +55,7 @@ public class DepartmentEntityControllerImpl implements DepartmentEntityControlle
     @Override
     @DeleteMapping(value = "/{id}")
     public ResponseEntity closeDepartment(@PathVariable Long id) {
+        System.out.println("КОНТРОЛЛЕР: ЗАКРЫТИЕ ОТДЕЛА");
        departmentService.closeDepartment(id);
         return new ResponseEntity<>(new CustomSuccessResponse(),HttpStatus.OK);
     }
@@ -68,7 +70,8 @@ public class DepartmentEntityControllerImpl implements DepartmentEntityControlle
 
     @Override
     @PutMapping(value = "/reassignDepartment")
-    public ResponseEntity reassignDepartment(Reassignment reassignment) {
+    public ResponseEntity reassignDepartment(@RequestBody Reassignment reassignment) {
+        System.out.println("КОНТРОЛЛЕР: СМЕНА РОДИТЕЛЬНОСКОГО ОТДЕЛА");
         departmentService.reassignDepartment(reassignment);
         return new ResponseEntity<>(new CustomSuccessResponse(),HttpStatus.OK);
     }
