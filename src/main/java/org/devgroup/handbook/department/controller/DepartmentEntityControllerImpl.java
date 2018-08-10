@@ -4,6 +4,7 @@ package org.devgroup.handbook.department.controller;
 import org.devgroup.handbook.department.model.DepartmentEntity;
 import org.devgroup.handbook.department.service.DepartmentEntityService;
 import org.devgroup.handbook.department.view.CreateView;
+import org.devgroup.handbook.department.view.DepartmentEntityDto;
 import org.devgroup.handbook.department.view.Reassignment;
 
 
@@ -37,8 +38,16 @@ public class DepartmentEntityControllerImpl implements DepartmentEntityControlle
     @Override
     @GetMapping(value = "/{id}")
     public ResponseEntity<CustomDataOut> searchDepartmentById(@PathVariable  Long id) {
+        System.out.println("КОНТРОЛЛЕР: ПОИСК ОТДЕЛА ПО ID");
         DepartmentEntity department = departmentService.searchDepartmentById(id);
-        CustomDataOut<DepartmentEntity> dataOut = new CustomDataOut<>(department);
+//        if (department == null) throw new RuntimeException("CONTROLLER: NULL SUKA!!!!!");
+        if (department.getParentDepartment() == null) throw new RuntimeException("blablalba");
+        DepartmentEntityDto dto = new DepartmentEntityDto(
+                department.getName()
+                ,department.getHeadEmployee().getName()
+                ,department.getParentDepartment().getName()
+        );
+        CustomDataOut<DepartmentEntityDto> dataOut = new CustomDataOut<>(dto);
         return new ResponseEntity<CustomDataOut>(dataOut,HttpStatus.OK);
     }
 
@@ -49,13 +58,13 @@ public class DepartmentEntityControllerImpl implements DepartmentEntityControlle
         return new ResponseEntity<>(new CustomSuccessResponse(),HttpStatus.OK);
     }
 
-    @Override
-    @GetMapping(value = "/{parentId}")
-    public ResponseEntity<CustomDataOut> getSubDepartments(@PathVariable Long parentId) {
-      List<DepartmentEntity> listBranches =  departmentService.searchListBranches(parentId);
-      CustomDataOut<List<DepartmentEntity>> dataOut = new CustomDataOut<>(listBranches);
-        return new ResponseEntity<CustomDataOut>(dataOut,HttpStatus.OK);
-    }
+//    @Override
+//    @GetMapping(value = "/{parentId}")
+//    public ResponseEntity<CustomDataOut> getSubDepartments(@PathVariable Long parentId) {
+//      List<DepartmentEntity> listBranches =  departmentService.searchListBranches(parentId);
+//      CustomDataOut<List<DepartmentEntity>> dataOut = new CustomDataOut<>(listBranches);
+//        return new ResponseEntity<CustomDataOut>(dataOut,HttpStatus.OK);
+//    }
 
     @Override
     @PutMapping(value = "/reassignDepartment")

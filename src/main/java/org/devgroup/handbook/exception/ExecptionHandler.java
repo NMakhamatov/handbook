@@ -48,6 +48,6 @@ public class ExecptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({Exception.class})
     protected ResponseEntity<?> handleAllExceptions(Exception e) {
         log.error(e.getMessage(), e);
-        return new ResponseEntity<>(new CustomErrorResponse("Internal Server Error"), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new CustomErrorResponse("Internal Server Error (handleAllExceptions)"), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

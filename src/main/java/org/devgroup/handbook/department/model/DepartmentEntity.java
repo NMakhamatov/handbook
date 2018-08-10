@@ -23,7 +23,7 @@ public class DepartmentEntity {
     private Long id;
 
     @NotNull
-    @Size(min = 3, max = 255)
+    @Size(min = 2, max = 255)
     @Basic(optional = false)
     @Column(name = "name", nullable = false)
     private String name;

@@ -28,7 +28,9 @@ public class DepartmentEntityDaoImpl  implements EntityDao<DepartmentEntity,Long
 
     @Override
     public DepartmentEntity getEntityById(Long id) {
-        return entityManager.find(DepartmentEntity.class, id);
+        DepartmentEntity departmentEntity = entityManager.find(DepartmentEntity.class, id);
+        if (departmentEntity == null) throw new RuntimeException("DAO: NULL!");
+        return departmentEntity;
     }
 
     @Override
