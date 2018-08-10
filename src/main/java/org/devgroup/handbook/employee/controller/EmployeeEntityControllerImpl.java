@@ -68,6 +68,7 @@ public class EmployeeEntityControllerImpl implements EmployeeEntityController {
     }
 
     @Override
+    @Transactional
     @DeleteMapping(value = "/{id}")
     public ResponseEntity removeEmployee(@PathVariable Long id) {
         employeeService.removeEmployee(id);
