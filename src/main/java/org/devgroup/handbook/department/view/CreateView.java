@@ -1,16 +1,16 @@
 package org.devgroup.handbook.department.view;
 
 public class CreateView {
-    private Long parentId;
+    private Long parent_department;
     private String name;
-    private Long managerId;
+    private Long head;
 
-    public Long getParentId() {
-        return parentId;
+    public Long getParent_department() {
+        return parent_department;
     }
 
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
+    public void setParent_department(Long parent_department) {
+        this.parent_department = parent_department;
     }
 
     public String getName() {
@@ -21,11 +21,11 @@ public class CreateView {
         this.name = name;
     }
 
-    public Long getManagerId() {
-        return managerId;
+    public Long getHead() {
+        return head;
     }
 
-    public void setManagerId(Long managerId) {
-        this.managerId = managerId;
+    public void setHead(Long head) {
+        this.head = head;
     }
 }

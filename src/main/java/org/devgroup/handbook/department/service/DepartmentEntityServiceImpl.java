@@ -57,12 +57,12 @@ public class DepartmentEntityServiceImpl implements DepartmentEntityService {
 
     @Override
     public ResponseDepById createDepartment(CreateView createDepartmentRequest) {
-        DepartmentEntity parent = departmentDao.getEntityById(createDepartmentRequest.getParentId());
+        DepartmentEntity parent = departmentDao.getEntityById(createDepartmentRequest.getParent_department());
         if(parent==null)
         {
             throw new DepartmentException("Не существует такого родительского департамента");
         }
-        EmployeeEntity manager = employeeDao.getEntityById(createDepartmentRequest.getManagerId());
+        EmployeeEntity manager = employeeDao.getEntityById(createDepartmentRequest.getHead());
         if(manager==null)
         {
             throw new DepartmentException("Не существует такого работника.");
