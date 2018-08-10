@@ -28,6 +28,7 @@ public class DepartmentEntityControllerImpl implements DepartmentEntityControlle
         this.departmentService = departmentEntityService;
     }
 
+    //good
     @Override
     @PostMapping(value = "/save")
     public ResponseEntity createDepartment(@RequestBody CreateView createView) {
@@ -36,6 +37,7 @@ public class DepartmentEntityControllerImpl implements DepartmentEntityControlle
         return new ResponseEntity<>(new CustomSuccessResponse(), HttpStatus.OK);
     }
 
+    //works good, but todo:change manager's name viewing
     @Override
     @GetMapping(value = "/{id}")
     public ResponseEntity<CustomDataOut> searchDepartmentById(@PathVariable  Long id) {
@@ -68,6 +70,7 @@ public class DepartmentEntityControllerImpl implements DepartmentEntityControlle
 //        return new ResponseEntity<CustomDataOut>(dataOut,HttpStatus.OK);
 //    }
 
+    //good
     @Override
     @PutMapping(value = "/reassignDepartment")
     public ResponseEntity reassignDepartment(@RequestBody Reassignment reassignment) {

@@ -26,6 +26,7 @@ public class EmployeeEntityControllerImpl implements EmployeeEntityController {
         this.employeeService = employeeService;
     }
 
+    //good
     @Override
     @GetMapping(value = "/{id}")
     public ResponseEntity<CustomDataOut> findById(@PathVariable Long id) {
@@ -39,13 +40,15 @@ public class EmployeeEntityControllerImpl implements EmployeeEntityController {
         dto.setBirthDate(employee.getBirthDate().toString());
         dto.setDepartmentName(employee.getDepartment().getName());
         dto.setPositionName(employee.getPosition().getName());
+        dto.setGender(Integer.toString(employee.getGender()));
 
         CustomDataOut<EmployeeDto> dataOut = new CustomDataOut<>(dto);
         return new ResponseEntity<CustomDataOut>(dataOut,HttpStatus.OK);
     }
 
+    //works not perfectly
+    //todo:salary not correct
     @Override
-//    @Transactional
     @PostMapping(value = "/saveEmployee")
     public ResponseEntity<CustomDataOut> createEmployee(@RequestBody CreateEmployee createEmployeeRequest) {
        CreateResponse createResponse = employeeService.createEmployee(createEmployeeRequest);
@@ -53,6 +56,7 @@ public class EmployeeEntityControllerImpl implements EmployeeEntityController {
         return  new ResponseEntity<CustomDataOut>(dataOut, HttpStatus.OK);
     }
 
+    //good
     @Override
     @PutMapping(value = "/transferEmployee")
     public ResponseEntity transferEmployee(@RequestBody TransferEmployee transferEmployeeRequest) {
@@ -60,6 +64,7 @@ public class EmployeeEntityControllerImpl implements EmployeeEntityController {
         return new ResponseEntity<>(new CustomSuccessResponse(),HttpStatus.OK);
     }
 
+    //good
     @Override
     @PutMapping(value = "/changeEmployee")
     public ResponseEntity changeEmployee(@RequestBody ChangeEmployee changeEmployeeRequest) {
@@ -67,6 +72,7 @@ public class EmployeeEntityControllerImpl implements EmployeeEntityController {
         return new ResponseEntity<>(new CustomSuccessResponse(),HttpStatus.OK);
     }
 
+    //good
     @Override
     @Transactional
     @DeleteMapping(value = "/{id}")
