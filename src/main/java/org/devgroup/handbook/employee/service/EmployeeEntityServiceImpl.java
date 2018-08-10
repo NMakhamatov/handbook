@@ -40,11 +40,13 @@ public class EmployeeEntityServiceImpl implements EmployeeEntityService{
         this.employeeDao = employeeDao;
     }
 
+    //работает
     @Override
     public EmployeeEntity findById(Long id) {
         return employeeDao.getEntityById(id);
     }
 
+    //работает
     @Override
     @Transactional
     public CreateResponse createEmployee(CreateEmployee createEmployeeRequest) {
@@ -78,21 +80,22 @@ public class EmployeeEntityServiceImpl implements EmployeeEntityService{
         employee.setGender(createEmployeeRequest.getGender());
         employee.setGrade(createEmployeeRequest.getGrade());
         Long id = employeeDao.create(employee);
-        CreateResponse createResponse = new CreateResponse(id);
-        return createResponse;
+        return new CreateResponse(id);
     }
 
+    //работает
     @Override
     @Transactional
     public void transferEmployee(TransferEmployee transferEmployeeRequest) {
-//        DepartmentEntity dep = departmentDao.getEntityById(transferEmployeeRequest.getDepIdFrom());
         DepartmentEntity dep = departmentDao.getEntityById(transferEmployeeRequest.getDepIdTo());
         EmployeeEntity employee = employeeDao.getEntityById(transferEmployeeRequest.getEmployeeId());
         employee.setDepartment(dep);
         employeeDao.update(employee);
     }
 
+    //good
     @Override
+    @Transactional
     public void changeEmployee(ChangeEmployee changeEmployeeRequest) {
         EmployeeEntity employee = employeeDao.getEntityById(changeEmployeeRequest.getEmployeeId());
         if (changeEmployeeRequest.getGrade() != 0) employee.setGrade(changeEmployeeRequest.getGrade());
