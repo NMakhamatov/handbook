@@ -12,6 +12,7 @@ import org.devgroup.handbook.util.CustomSuccessResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -44,6 +45,7 @@ public class EmployeeEntityControllerImpl implements EmployeeEntityController {
     }
 
     @Override
+//    @Transactional
     @PostMapping(value = "/saveEmployee")
     public ResponseEntity<CustomDataOut> createEmployee(@RequestBody CreateEmployee createEmployeeRequest) {
        CreateResponse createResponse = employeeService.createEmployee(createEmployeeRequest);

@@ -1,6 +1,5 @@
 package org.devgroup.handbook.employee.service;
 
-import org.devgroup.handbook.department.dao.DepartmentEntityDaoImpl;
 import org.devgroup.handbook.department.model.DepartmentEntity;
 import org.devgroup.handbook.employee.dao.EmployeeEntityDaoImpl;
 import org.devgroup.handbook.employee.model.EmployeeEntity;
@@ -9,18 +8,32 @@ import org.devgroup.handbook.employee.view.CreateEmployee;
 import org.devgroup.handbook.employee.view.TransferEmployee;
 import org.devgroup.handbook.employee.view.response.CreateResponse;
 import org.devgroup.handbook.exception.EmployeeException;
-import org.devgroup.handbook.position.dao.PositionDaoImpl;
 import org.devgroup.handbook.position.model.PositionEntity;
 import org.devgroup.handbook.util.EntityDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
+//@EnableTransactionManagement
 @Service
 public class EmployeeEntityServiceImpl implements EmployeeEntityService{
 
     private EntityDao<EmployeeEntity,Long> employeeDao;
     private EntityDao<PositionEntity,Long> positionDao;
     private EntityDao<DepartmentEntity,Long> departmentDao;
+
+
+
+    @Autowired
+    public void setPositionDao(EntityDao<PositionEntity, Long> positionDao) {
+        this.positionDao = positionDao;
+    }
+
+    @Autowired
+    public void setDepartmentDao(EntityDao<DepartmentEntity, Long> departmentDao) {
+        this.departmentDao = departmentDao;
+    }
 
     @Autowired
     public EmployeeEntityServiceImpl(EmployeeEntityDaoImpl employeeDao) {
@@ -33,16 +46,18 @@ public class EmployeeEntityServiceImpl implements EmployeeEntityService{
     }
 
     @Override
+    @Transactional
     public CreateResponse createEmployee(CreateEmployee createEmployeeRequest) {
         String exceptionText = "";
         if ((createEmployeeRequest.getName()) == null) exceptionText+="Имя не введено; ";
         if ((createEmployeeRequest.getSurname()) == null) exceptionText+="Фамилия не введена; ";
         if ((createEmployeeRequest.getBirthDate()) == null) exceptionText+="Не указана дата рождения; ";
-        if ((createEmployeeRequest.getGender()) == null) exceptionText+="не указан пол; ";
-        if ((createEmployeeRequest.getGrade()) == null) exceptionText+="не указан грейд";
-        if ((createEmployeeRequest.getIdDepartment()) == null) exceptionText+="не указана департамент";
-        if ((createEmployeeRequest.getIdPosition()) == null) exceptionText+="не указана должность";
-        if ((createEmployeeRequest.getSalary()) == null) exceptionText+="не указана зарплата";
+        if ((createEmployeeRequest.getGender()) != 0
+                && (createEmployeeRequest.getGender()) != 1) exceptionText+="не указан пол; ";
+        if ((createEmployeeRequest.getGrade()) == null) exceptionText+="не указан грейд; ";
+        if ((createEmployeeRequest.getIdDepartment()) == null) exceptionText+="не указана департамент; ";
+        if ((createEmployeeRequest.getIdPosition()) == null) exceptionText+="не указана должность; ";
+        if ((createEmployeeRequest.getSalary()) == null) exceptionText+="не указана зарплата; ";
 
         if (!((exceptionText).equals(""))) throw new EmployeeException(exceptionText);
 
@@ -56,11 +71,12 @@ public class EmployeeEntityServiceImpl implements EmployeeEntityService{
         employee.setName(createEmployeeRequest.getName());
         employee.setSurname(createEmployeeRequest.getSurname());
         employee.setBirthDate(createEmployeeRequest.getBirthDate());
-        employee.setPatronymic(createEmployeeRequest.getMiddleName());
+        employee.setPatronymic(createEmployeeRequest.getPatronymic());
         employee.setPosition(position);
         employee.setDepartment(department);
         employee.setSalary(createEmployeeRequest.getSalary());
         employee.setGender(createEmployeeRequest.getGender());
+        employee.setGrade(createEmployeeRequest.getGrade());
         Long id = employeeDao.create(employee);
         CreateResponse createResponse = new CreateResponse(id);
         return createResponse;
