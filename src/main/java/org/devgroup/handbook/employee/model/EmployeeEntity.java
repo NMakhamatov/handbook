@@ -39,7 +39,7 @@ public class EmployeeEntity {
 
     @NotNull
     @Column(name = "gender", nullable = false)
-    private String gender;
+    private int gender;
 
     @NotNull
     @Column(name = "birth_date", nullable = false)
@@ -100,11 +100,11 @@ public class EmployeeEntity {
         this.patronymic = patronymic;
     }
 
-    public String getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 

@@ -4,6 +4,7 @@ package org.devgroup.handbook.employee.view;
 import org.devgroup.handbook.dto.Certificate;
 import org.springframework.lang.NonNull;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -29,19 +30,19 @@ public class CreateEmployee {
         this.surname = surname;
     }
 
-    public String getMiddleName() {
-        return middleName;
+    public String getPatronymic() {
+        return patronymic;
     }
 
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
     }
 
-    public String getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 
@@ -93,22 +94,28 @@ public class CreateEmployee {
         this.certificates = certificates;
     }
 
-    @NonNull
+    @NotNull
     private String name;
-    @NonNull
+//    @NonNull
+    @NotNull
     private String surname;
-    private String middleName;
-    @NonNull
-    private String gender;
-    @NonNull
+    private String patronymic;
+//    @NonNull
+    @NotNull
+    private int gender;
+//    @NonNull
+    @NotNull
     private Date birthDate;
-    @NonNull
+//    @NonNull
+    @NotNull
     private Long idDepartment;
-    @NonNull
+//    @NonNull
+    @NotNull
     private Long idPosition;
-    @NonNull
+    @NotNull
     private Long grade;
-    @NonNull
+//    @NonNull
+    @NotNull
     private BigDecimal salary;
     private List<Certificate> certificates;
 

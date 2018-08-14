@@ -28,12 +28,16 @@ public class DepartmentEntityDaoImpl  implements EntityDao<DepartmentEntity,Long
 
     @Override
     public DepartmentEntity getEntityById(Long id) {
-        return entityManager.find(DepartmentEntity.class, id);
+        System.out.println("ДАО: ПОЛУЧЕНИЕ ОТДЕЛА ПО ID" + " id = " + id);
+        DepartmentEntity departmentEntity = entityManager.find(DepartmentEntity.class, id);
+//        if (departmentEntity == null) throw new RuntimeException("DAO: NULL!");
+        return departmentEntity;
     }
 
     @Override
     @Transactional
     public void update(DepartmentEntity entity) {
+        System.out.println("ДАО: ОБНОВЛЕНИЕ ОТДЕЛА ПО СУЩНОСТИ");
         entityManager.merge(entity);
         entityManager.flush();
 
@@ -42,6 +46,7 @@ public class DepartmentEntityDaoImpl  implements EntityDao<DepartmentEntity,Long
     @Override
     @Transactional
     public void delete(DepartmentEntity entity) {
+        System.out.println("ДАО: УДАЛЕНИЕ ОТДЕЛА ПО СУЩНОСТИ");
         DepartmentEntity departmentEntity = entityManager.getReference(DepartmentEntity.class, entity.getId());
         entityManager.remove(departmentEntity);
         entityManager.flush();
@@ -51,12 +56,14 @@ public class DepartmentEntityDaoImpl  implements EntityDao<DepartmentEntity,Long
     @Override
     @Transactional
     public Long create(DepartmentEntity entity) {
+        System.out.println("ДАО: СОЗДАНИЕ НОВОГО ОТДЕЛА");
         entityManager.persist(entity);
          return  entity.getId();
     }
 
     @Override
     public <T> TypedQuery<T> getWithCriteria(CriteriaQuery<T> criteriaQuery) {
+        System.out.println("ДАО: ПОЛУЧЕНИЕ ОТДЕЛА ПО КРИТЕРИЯМ");
         return entityManager.createQuery(criteriaQuery);
     }
 }

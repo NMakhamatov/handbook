@@ -4,6 +4,7 @@ package org.devgroup.handbook.department.controller;
 import org.devgroup.handbook.department.model.DepartmentEntity;
 import org.devgroup.handbook.department.service.DepartmentEntityService;
 import org.devgroup.handbook.department.view.CreateView;
+import org.devgroup.handbook.department.view.DepartmentEntityDto;
 import org.devgroup.handbook.department.view.Reassignment;
 
 
@@ -27,18 +28,29 @@ public class DepartmentEntityControllerImpl implements DepartmentEntityControlle
         this.departmentService = departmentEntityService;
     }
 
+    //good
     @Override
     @PostMapping(value = "/save")
     public ResponseEntity createDepartment(@RequestBody CreateView createView) {
+        System.out.println("КОНТРОЛЛЕР: СОЗДАНИЕ НОВОГО ОТДЕЛА");
         departmentService.createDepartment(createView);
         return new ResponseEntity<>(new CustomSuccessResponse(), HttpStatus.OK);
     }
 
+    //works good, but todo:change manager's name viewing
     @Override
     @GetMapping(value = "/{id}")
     public ResponseEntity<CustomDataOut> searchDepartmentById(@PathVariable  Long id) {
+        System.out.println("КОНТРОЛЛЕР: ПОИСК ОТДЕЛА ПО ID");
         DepartmentEntity department = departmentService.searchDepartmentById(id);
-        CustomDataOut<DepartmentEntity> dataOut = new CustomDataOut<>(department);
+//        if (department == null) throw new RuntimeException("CONTROLLER: NULL SUKA!!!!!");
+        if (department.getParentDepartment() == null) throw new RuntimeException("blablalba");
+        DepartmentEntityDto dto = new DepartmentEntityDto(
+                department.getName()
+                ,department.getHeadEmployee().getName()
+                ,department.getParentDepartment().getName()
+        );
+        CustomDataOut<DepartmentEntityDto> dataOut = new CustomDataOut<>(dto);
         return new ResponseEntity<CustomDataOut>(dataOut,HttpStatus.OK);
     }
 
@@ -59,7 +71,8 @@ public class DepartmentEntityControllerImpl implements DepartmentEntityControlle
 
     @Override
     @PutMapping(value = "/reassignDepartment")
-    public ResponseEntity reassignDepartment(Reassignment reassignment) {
+    public ResponseEntity reassignDepartment(@RequestBody Reassignment reassignment) {
+        System.out.println("КОНТРОЛЛЕР: СМЕНА РОДИТЕЛЬНОСКОГО ОТДЕЛА");
         departmentService.reassignDepartment(reassignment);
         return new ResponseEntity<>(new CustomSuccessResponse(),HttpStatus.OK);
     }

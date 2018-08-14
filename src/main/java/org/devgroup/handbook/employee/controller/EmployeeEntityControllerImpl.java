@@ -1,8 +1,10 @@
 package org.devgroup.handbook.employee.controller;
 
+import org.devgroup.handbook.employee.model.EmployeeEntity;
 import org.devgroup.handbook.employee.service.EmployeeEntityService;
 import org.devgroup.handbook.employee.view.ChangeEmployee;
 import org.devgroup.handbook.employee.view.CreateEmployee;
+import org.devgroup.handbook.employee.view.EmployeeDto;
 import org.devgroup.handbook.employee.view.TransferEmployee;
 import org.devgroup.handbook.employee.view.response.CreateResponse;
 import org.devgroup.handbook.util.CustomDataOut;
@@ -10,6 +12,7 @@ import org.devgroup.handbook.util.CustomSuccessResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -23,6 +26,28 @@ public class EmployeeEntityControllerImpl implements EmployeeEntityController {
         this.employeeService = employeeService;
     }
 
+    //good
+    @Override
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<CustomDataOut> findById(@PathVariable Long id) {
+        EmployeeEntity employee = employeeService.findById(id);
+
+        EmployeeDto dto = new EmployeeDto();
+        dto.setId(employee.getId());
+        dto.setName(employee.getName());
+        dto.setSurName(employee.getSurname());
+        if (employee.getPatronymic() != null) dto.setMiddleName(employee.getPatronymic());
+        dto.setBirthDate(employee.getBirthDate().toString());
+        dto.setDepartmentName(employee.getDepartment().getName());
+        dto.setPositionName(employee.getPosition().getName());
+        dto.setGender(Integer.toString(employee.getGender()));
+
+        CustomDataOut<EmployeeDto> dataOut = new CustomDataOut<>(dto);
+        return new ResponseEntity<CustomDataOut>(dataOut,HttpStatus.OK);
+    }
+
+    //works not perfectly
+    //todo:salary not correct
     @Override
     @PostMapping(value = "/saveEmployee")
     public ResponseEntity<CustomDataOut> createEmployee(@RequestBody CreateEmployee createEmployeeRequest) {
@@ -31,6 +56,7 @@ public class EmployeeEntityControllerImpl implements EmployeeEntityController {
         return  new ResponseEntity<CustomDataOut>(dataOut, HttpStatus.OK);
     }
 
+    //good
     @Override
     @PutMapping(value = "/transferEmployee")
     public ResponseEntity transferEmployee(@RequestBody TransferEmployee transferEmployeeRequest) {
@@ -38,6 +64,7 @@ public class EmployeeEntityControllerImpl implements EmployeeEntityController {
         return new ResponseEntity<>(new CustomSuccessResponse(),HttpStatus.OK);
     }
 
+    //good
     @Override
     @PutMapping(value = "/changeEmployee")
     public ResponseEntity changeEmployee(@RequestBody ChangeEmployee changeEmployeeRequest) {
@@ -45,7 +72,9 @@ public class EmployeeEntityControllerImpl implements EmployeeEntityController {
         return new ResponseEntity<>(new CustomSuccessResponse(),HttpStatus.OK);
     }
 
+    //good
     @Override
+    @Transactional
     @DeleteMapping(value = "/{id}")
     public ResponseEntity removeEmployee(@PathVariable Long id) {
         employeeService.removeEmployee(id);
