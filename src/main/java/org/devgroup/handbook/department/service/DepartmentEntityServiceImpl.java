@@ -64,7 +64,7 @@ public class DepartmentEntityServiceImpl implements DepartmentEntityService {
 
     @Override
     public ResponseDepById createDepartment(CreateView createDepartmentRequest) {
-        System.out.println("СЕРВИС: СОЗДАНИЕ НОВОГО ОТДЕЛА");
+//        System.out.println("СЕРВИС: СОЗДАНИЕ НОВОГО ОТДЕЛА");
         DepartmentEntity parent = departmentDao.getEntityById(createDepartmentRequest.getParent_department());
         if(parent==null)
         {
@@ -88,10 +88,10 @@ public class DepartmentEntityServiceImpl implements DepartmentEntityService {
     @Override
     public void reassignDepartment(Reassignment reassignmentRequest) {
 
-        DepartmentEntity depToReassign = departmentDao.getEntityById(reassignmentRequest.getIdDepToReassign());
+        DepartmentEntity depToReassign = departmentDao.getEntityById(reassignmentRequest.getDep());
         if(depToReassign==null)
         throw new DepartmentException("Не существует департамента от которого надо отделить.");
-        DepartmentEntity newParentDep = departmentDao.getEntityById(reassignmentRequest.getIdNewParentDep());
+        DepartmentEntity newParentDep = departmentDao.getEntityById(reassignmentRequest.getNewParId());
         if(newParentDep==null)
             throw new DepartmentException("Не существует департамента которому нужно переподчинить отдел.");
         depToReassign.setParentDepartment(newParentDep);
