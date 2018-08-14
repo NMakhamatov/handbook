@@ -9,6 +9,7 @@ import org.devgroup.handbook.exception.exceptions.DepartmentException;
 import org.devgroup.handbook.util.EntityDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -38,8 +39,16 @@ public class DepartmentEntityServiceImpl implements DepartmentEntityService {
     }
 
     @Override
+    @Transactional
     public void closeDepartment(long id) {
-
+        List<DepartmentEntity> subdeps = searchListBranches(id);
+        if(subdeps!=null)
+            throw new DepartmentException("Отдел содержит другие отделы. Удаление невозможно.");
+        List<EmployeeEntity> empsOfDep = getListEmployeeOfDepartment(id);
+        if(empsOfDep!=null)
+        throw  new DepartmentException("В отделе есть сотрудники. Удаление невозможно");
+        DepartmentEntity departmentToDelete = departmentDao.getEntityById(id);
+        departmentDao.delete(departmentToDelete);
     }
 
     @Override
@@ -58,10 +67,6 @@ public class DepartmentEntityServiceImpl implements DepartmentEntityService {
     @Override
     public ResponseDepById createDepartment(CreateView createDepartmentRequest) {
         DepartmentEntity parent = departmentDao.getEntityById(createDepartmentRequest.getParentId());
-        if(parent==null)
-        {
-            throw new DepartmentException("Не существует такого родительского департамента");
-        }
         EmployeeEntity manager = employeeDao.getEntityById(createDepartmentRequest.getManagerId());
         if(manager==null)
         {

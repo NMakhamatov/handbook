@@ -50,12 +50,12 @@ public class DepartmentEntityControllerImpl implements DepartmentEntityControlle
     }
 
     @Override
-    @GetMapping(value = "/{parentId}")
+    @GetMapping(value = "/{parentId}/subDepartments")
     public ResponseEntity<CustomDataOut> getSubDepartments(@PathVariable Long parentId) {
       List<DepartmentEntity> listBranches =  departmentService.searchListBranches(parentId);
       CustomDataOut<List<DepartmentEntity>> dataOut = new CustomDataOut<>(listBranches);
         return new ResponseEntity<CustomDataOut>(dataOut,HttpStatus.OK);
-    }
+ }
 
     @Override
     @PutMapping(value = "/reassignDepartment")
