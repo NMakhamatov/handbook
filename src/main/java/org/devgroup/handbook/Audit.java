@@ -19,12 +19,12 @@ public class Audit {
     public void aspectMethods(){}
 
     @Before(value = "anyExec() && !aspectMethods()")
-    public void beforeAdvice(){
-        System.out.println("Before");
+    public void beforeAdvice(JoinPoint joinPoint){
+        System.out.println("Before: " + joinPoint.getSignature());
     }
 
     @After(value = "anyExec() && !aspectMethods()")
-    public void afterCalling() {
-        System.out.println("After");
+    public void afterCalling(JoinPoint joinPoint) {
+        System.out.println("After " + joinPoint.getSignature());
     }
 }

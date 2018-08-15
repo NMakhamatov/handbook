@@ -83,7 +83,10 @@ public class CreateEmployee {
     }
 
     public void setSalary(BigDecimal salary) {
+        salary = salary.setScale(2,BigDecimal.ROUND_HALF_UP);
         this.salary = salary;
+        this.salary = this.salary.setScale(2,BigDecimal.ROUND_HALF_UP);
+
     }
 
     public List<Certificate> getCertificates() {
