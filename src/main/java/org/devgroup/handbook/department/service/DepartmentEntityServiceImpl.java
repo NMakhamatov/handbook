@@ -2,6 +2,7 @@ package org.devgroup.handbook.department.service;
 
 import org.devgroup.handbook.department.model.DepartmentEntity;
 import org.devgroup.handbook.department.view.CreateView;
+import org.devgroup.handbook.department.view.DepartmentEntityDto;
 import org.devgroup.handbook.department.view.Reassignment;
 import org.devgroup.handbook.department.view.ResponseDepById;
 import org.devgroup.handbook.employee.model.EmployeeEntity;
@@ -14,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -39,7 +41,7 @@ public class DepartmentEntityServiceImpl implements DepartmentEntityService {
 
     @Override
     public void closeDepartment(long id) {
-        List<DepartmentEntity> subdeps = searchListBranches(id);
+        List<DepartmentEntityDto> subdeps = searchListBranches(id);
         if(subdeps!=null)
             throw new DepartmentException("Отдел содержит другие отделы. Удаление невозможно.");
         List<EmployeeEntity> empsOfDep = getListEmployeeOfDepartment(id);
@@ -50,7 +52,7 @@ public class DepartmentEntityServiceImpl implements DepartmentEntityService {
     }
 
     @Override
-    public List<DepartmentEntity> searchListBranches(long id) {
+    public List<DepartmentEntityDto> searchListBranches(long id) {
         List<DepartmentEntity> listOfDepartment;
 
             CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -59,17 +61,23 @@ public class DepartmentEntityServiceImpl implements DepartmentEntityService {
             departmentQuery.where(criteriaBuilder.equal(depRoot.get("parentDepartment"), id));
             listOfDepartment = entityManager.createQuery(departmentQuery).getResultList();
 
-        return listOfDepartment;
+            List<DepartmentEntityDto> result = new ArrayList<>();
+            for(DepartmentEntity d : listOfDepartment)
+            {
+                DepartmentEntityDto departmentEntityDto = new DepartmentEntityDto(d.getName(),d.getHeadEmployee().getName(),d.getParentDepartment().getName());
+                result.add(departmentEntityDto);
+            }
+        return result;
     }
 
     @Override
     public ResponseDepById createDepartment(CreateView createDepartmentRequest) {
-//        System.out.println("СЕРВИС: СОЗДАНИЕ НОВОГО ОТДЕЛА");
-        DepartmentEntity parent = departmentDao.getEntityById(createDepartmentRequest.getParent_department());
-        if(parent==null)
-        {
-            throw new DepartmentException("Не существует такого родительского департамента");
-        }
+        System.out.println("СЕРВИС: СОЗДАНИЕ НОВОГО ОТДЕЛА");
+      DepartmentEntity parent = departmentDao.getEntityById(createDepartmentRequest.getParent_department());
+//        if(parent==null)
+//        {
+//            throw new DepartmentException("Не существует такого родительского департамента");
+//        }
         EmployeeEntity manager = employeeDao.getEntityById(createDepartmentRequest.getHead());
         if(manager==null)
         {
@@ -110,7 +118,11 @@ public class DepartmentEntityServiceImpl implements DepartmentEntityService {
     }
 
     @Override
-    public DepartmentEntity searchDepartmentById(long id) {
-        return departmentDao.getEntityById(id);
+    public DepartmentEntityDto searchDepartmentById(long id) {
+        DepartmentEntity department = departmentDao.getEntityById(id);
+        DepartmentEntityDto departmentEntityDto = new DepartmentEntityDto(department.getName()
+                ,department.getHeadEmployee().getName()
+                ,department.getParentDepartment().getName());
+        return departmentEntityDto;
     }
 }

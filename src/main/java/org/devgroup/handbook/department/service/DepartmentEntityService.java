@@ -2,6 +2,7 @@ package org.devgroup.handbook.department.service;
 
 import org.devgroup.handbook.department.model.DepartmentEntity;
 import org.devgroup.handbook.department.view.CreateView;
+import org.devgroup.handbook.department.view.DepartmentEntityDto;
 import org.devgroup.handbook.department.view.Reassignment;
 import org.devgroup.handbook.department.view.ResponseDepById;
 import org.devgroup.handbook.employee.model.EmployeeEntity;
@@ -12,7 +13,7 @@ public interface DepartmentEntityService {
 
     void closeDepartment(long id);
 
-    List<DepartmentEntity> searchListBranches(long id);
+    List<DepartmentEntityDto> searchListBranches(long id);
 
     ResponseDepById createDepartment(CreateView createDepartmentRequest);
 
@@ -20,5 +21,5 @@ public interface DepartmentEntityService {
 
     List<EmployeeEntity> getListEmployeeOfDepartment(long id);
 
-    DepartmentEntity searchDepartmentById(long id);
+    DepartmentEntityDto searchDepartmentById(long id);
 }
