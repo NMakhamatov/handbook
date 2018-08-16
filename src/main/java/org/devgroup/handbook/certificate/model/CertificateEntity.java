@@ -1,19 +1,11 @@
 package org.devgroup.handbook.certificate.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.devgroup.handbook.employee.model.EmployeeEntity;
 
 import javax.persistence.*;
 import java.sql.Blob;
 import java.util.Date;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "certificates")
 public class CertificateEntity {
