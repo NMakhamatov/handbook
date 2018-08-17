@@ -98,6 +98,10 @@ public class EmployeeEntityServiceImpl implements EmployeeEntityService{
     @Transactional
     public void changeEmployee(ChangeEmployee changeEmployeeRequest) {
         EmployeeEntity employee = employeeDao.getEntityById(changeEmployeeRequest.getEmployeeId());
+        if (changeEmployeeRequest.getName() != null) employee.setName(changeEmployeeRequest.getName());
+        if (changeEmployeeRequest.getSurName() != null) employee.setSurname(changeEmployeeRequest.getSurName());
+        if (changeEmployeeRequest.getPatronymic() != null) employee.setPatronymic(changeEmployeeRequest.getPatronymic());
+        if (changeEmployeeRequest.getGender() == 0 || changeEmployeeRequest.getGender()==1) employee.setGender(changeEmployeeRequest.getGender());
         if (changeEmployeeRequest.getGrade() != 0) employee.setGrade(changeEmployeeRequest.getGrade());
         if (changeEmployeeRequest.getPositionId() != 0 ) {
             PositionEntity position = positionDao.getEntityById(changeEmployeeRequest.getPositionId());

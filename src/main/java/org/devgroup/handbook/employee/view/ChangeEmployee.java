@@ -4,10 +4,46 @@ package org.devgroup.handbook.employee.view;
 import java.math.BigDecimal;
 
 public class ChangeEmployee {
+    private String name;
+    private String surName;
+    private String patronymic;
+    private int gender;
     private long employeeId;
     private long positionId;
     private long grade;
     private BigDecimal salary;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurName() {
+        return surName;
+    }
+
+    public void setSurName(String surName) {
+        this.surName = surName;
+    }
+
+    public String getPatronymic() {
+        return patronymic;
+    }
+
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
 
     public long getEmployeeId() {
         return employeeId;
