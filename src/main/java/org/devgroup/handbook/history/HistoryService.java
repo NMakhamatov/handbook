@@ -31,6 +31,6 @@ public class HistoryService {
         criteriaQuery.where(criteriaBuilder.equal(root.get("employee"), id));
         List<HistoryEntity> historyEntities = historyDao.getWithCriteria(criteriaQuery).getResultList();
         return null;
-        //todo : entities to dto and check does this work properly
+        //todo : entities to dto and check does this work properly . change naming
     }
 }
