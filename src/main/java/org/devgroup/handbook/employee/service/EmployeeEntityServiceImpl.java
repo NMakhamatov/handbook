@@ -7,12 +7,11 @@ import org.devgroup.handbook.employee.view.ChangeEmployee;
 import org.devgroup.handbook.employee.view.CreateEmployee;
 import org.devgroup.handbook.employee.view.TransferEmployee;
 import org.devgroup.handbook.employee.view.response.CreateResponse;
-import org.devgroup.handbook.exception.EmployeeException;
+import org.devgroup.handbook.exception.exceptions.EmployeeException;
 import org.devgroup.handbook.position.model.PositionEntity;
 import org.devgroup.handbook.util.EntityDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 //@EnableTransactionManagement
@@ -35,15 +34,22 @@ public class EmployeeEntityServiceImpl implements EmployeeEntityService{
         this.departmentDao = departmentDao;
     }
 
+//    @Autowired
+    public EmployeeEntityServiceImpl() {
+    }
+
     @Autowired
-    public EmployeeEntityServiceImpl(EmployeeEntityDaoImpl employeeDao) {
+    public void setEmployeeDao(EntityDao<EmployeeEntity, Long> employeeDao) {
         this.employeeDao = employeeDao;
     }
 
     //работает
     @Override
     public EmployeeEntity findById(Long id) {
-        return employeeDao.getEntityById(id);
+        EmployeeEntity employee = employeeDao.getEntityById(id);
+        if (employee == null) {
+            throw  new EmployeeException("Сотрудника с id = " + id + " не существует;");
+        } else return employee;
     }
 
     //работает

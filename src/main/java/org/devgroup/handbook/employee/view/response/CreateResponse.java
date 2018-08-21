@@ -1,6 +1,6 @@
 package org.devgroup.handbook.employee.view.response;
 
-public class CreateResponse {
+public class CreateResponse{
     private Long id;
 
     public CreateResponse(Long id) {
@@ -14,4 +14,12 @@ public class CreateResponse {
     public void setId(Long id) {
         this.id = id;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass() != CreateResponse.class) return false;
+        CreateResponse resp = (CreateResponse) obj;
+        return getId().equals(resp.getId());
+    }
+
 }

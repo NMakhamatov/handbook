@@ -2,7 +2,7 @@ package org.devgroup.handbook.employee.view;
 
 public class TransferEmployee {
     private long employeeId;
-    private long depIdFrom; //todo: is redundant?
+//    private long depIdFrom; //todo: is redundant?
     private long depIdTo;
 
     public long getEmployeeId() {
@@ -13,13 +13,13 @@ public class TransferEmployee {
         this.employeeId = employeeId;
     }
 
-    public long getDepIdFrom() {
-        return depIdFrom;
-    }
-
-    public void setDepIdFrom(long depIdFrom) {
-        this.depIdFrom = depIdFrom;
-    }
+//    public long getDepIdFrom() {
+//        return depIdFrom;
+//    }
+//
+//    public void setDepIdFrom(long depIdFrom) {
+//        this.depIdFrom = depIdFrom;
+//    }
 
     public long getDepIdTo() {
         return depIdTo;

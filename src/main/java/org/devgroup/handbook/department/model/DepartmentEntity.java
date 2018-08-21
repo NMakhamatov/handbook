@@ -40,7 +40,9 @@ public class DepartmentEntity {
         return id;
     }
 
-
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public EmployeeEntity getHeadEmployee() {
         return headEmployee;
