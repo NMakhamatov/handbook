@@ -1,18 +1,12 @@
 package org.devgroup.handbook.employee.view;
 
-//import lombok.*;
 import org.devgroup.handbook.dto.Certificate;
-import org.springframework.lang.NonNull;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-//@Data
-//@AllArgsConstructor
-//@NoArgsConstructor
-//@Builder
 public class CreateEmployee {
     public String getName() {
         return name;

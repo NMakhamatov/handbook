@@ -1,9 +1,5 @@
 package org.devgroup.handbook.employee.model;
 
-//import lombok.AllArgsConstructor;
-//import lombok.Builder;
-//import lombok.Data;
-//import lombok.NoArgsConstructor;
 import org.devgroup.handbook.department.model.DepartmentEntity;
 import org.devgroup.handbook.position.model.PositionEntity;
 import org.devgroup.handbook.util.BigDecimalConverter;
@@ -13,10 +9,6 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 
-//@Data
-//@Builder
-//@AllArgsConstructor
-//@NoArgsConstructor
 @Entity
 @Table(name = "employees")
 public class EmployeeEntity {

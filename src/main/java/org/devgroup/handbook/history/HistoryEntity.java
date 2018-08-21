@@ -33,4 +33,41 @@ import java.util.Date;
     @NotNull
     @Column(name = "date_end", nullable = false)
     private Date dateEnd;
+
+   public Long getId() {
+      return id;
+   }
+
+
+   public String getEvent() {
+      return event;
+   }
+
+   public void setEvent(String event) {
+      this.event = event;
+   }
+
+   public EmployeeEntity getEmployee() {
+      return employee;
+   }
+
+   public void setEmployee(EmployeeEntity employee) {
+      this.employee = employee;
+   }
+
+   public Date getDateStart() {
+      return dateStart;
+   }
+
+   public void setDateStart(Date dateStart) {
+      this.dateStart = dateStart;
+   }
+
+   public Date getDateEnd() {
+      return dateEnd;
+   }
+
+   public void setDateEnd(Date dateEnd) {
+      this.dateEnd = dateEnd;
+   }
 }

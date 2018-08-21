@@ -42,10 +42,10 @@ public class DepartmentEntityServiceImpl implements DepartmentEntityService {
     @Override
     public void closeDepartment(long id) {
         List<DepartmentEntityDto> subdeps = searchListBranches(id);
-        if(subdeps!=null)
+        if(subdeps.size() != 0)
             throw new DepartmentException("Отдел содержит другие отделы. Удаление невозможно.");
         List<EmployeeEntity> empsOfDep = getListEmployeeOfDepartment(id);
-        if(empsOfDep!=null)
+        if(empsOfDep.size() != 0)
         throw  new DepartmentException("В отделе есть сотрудники. Удаление невозможно");
         DepartmentEntity departmentToDelete = departmentDao.getEntityById(id);
         departmentDao.delete(departmentToDelete);
