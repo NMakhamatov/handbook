@@ -7,6 +7,8 @@ import org.devgroup.handbook.employee.view.CreateEmployee;
 import org.devgroup.handbook.employee.view.EmployeeDto;
 import org.devgroup.handbook.employee.view.TransferEmployee;
 import org.devgroup.handbook.employee.view.response.CreateResponse;
+import org.devgroup.handbook.history.HistoryDto;
+import org.devgroup.handbook.history.HistoryService;
 import org.devgroup.handbook.util.CustomDataOut;
 import org.devgroup.handbook.util.CustomSuccessResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +17,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping(value = "api/employee/")
 public class EmployeeEntityControllerImpl implements EmployeeEntityController {
+
     private EmployeeEntityService employeeService;
+
+    private HistoryService historyService;
+
+    @Autowired
+    public void setHistoryService(HistoryService historyService) {
+        this.historyService = historyService;
+    }
 
     @Autowired
     public EmployeeEntityControllerImpl(EmployeeEntityService employeeService) {
@@ -79,5 +91,12 @@ public class EmployeeEntityControllerImpl implements EmployeeEntityController {
     public ResponseEntity removeEmployee(@PathVariable Long id) {
         employeeService.removeEmployee(id);
         return new ResponseEntity<>(new CustomSuccessResponse(),HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{id}/history")
+    public ResponseEntity history(@PathVariable Long id) {
+        List<HistoryDto> dto = historyService.empHistory(id);
+        CustomDataOut<List<HistoryDto>> dataOut = new CustomDataOut<>(dto);
+        return new ResponseEntity<CustomDataOut>(dataOut,HttpStatus.OK);
     }
 }
