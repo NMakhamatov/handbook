@@ -1,8 +1,11 @@
 package ru.tsc.practice.history;
 
-import ru.tsc.practice.employee.view.EmployeeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.tsc.practice.employee.view.EmployeeDto;
+import ru.tsc.practice.history.HistoryDao;
+import ru.tsc.practice.history.HistoryDto;
+import ru.tsc.practice.history.HistoryEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -19,7 +22,7 @@ public class HistoryService {
     private HistoryDao historyDao;
     private EntityManager entityManager;
 
-    public static Date endDate;
+    public static  Date endDate;
 
     static {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -64,6 +67,7 @@ public class HistoryService {
         }
         return result;
     }
+
     public HistoryEntity historyEntityPrev(Long empId,Date date)
     {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();

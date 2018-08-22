@@ -1,5 +1,8 @@
 package ru.tsc.practice.employee.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.tsc.practice.department.model.DepartmentEntity;
 import ru.tsc.practice.employee.model.EmployeeEntity;
 import ru.tsc.practice.employee.view.ChangeEmployee;
@@ -12,9 +15,6 @@ import ru.tsc.practice.history.HistoryEntity;
 import ru.tsc.practice.history.HistoryService;
 import ru.tsc.practice.position.model.PositionEntity;
 import ru.tsc.practice.util.EntityDao;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -37,7 +37,6 @@ public class EmployeeEntityServiceImpl implements EmployeeEntityService{
     public void setHistoryDao(HistoryDao historyDao) {
         this.historyDao = historyDao;
     }
-
 
 
     @Autowired
@@ -102,14 +101,12 @@ public class EmployeeEntityServiceImpl implements EmployeeEntityService{
         employee.setGender(createEmployeeRequest.getGender());
         employee.setGrade(createEmployeeRequest.getGrade());
         Long id = employeeDao.create(employee);
-
         HistoryEntity historyEntity = new HistoryEntity();
         historyEntity.setEvent("Наняли сотрудника " +createEmployeeRequest.getName()+" "+createEmployeeRequest.getSurname()+" "+createEmployeeRequest.getPatronymic());
         historyEntity.setEmployee(employeeDao.getEntityById(id));
         historyEntity.setDateStart(new Date());
         historyEntity.setDateEnd(HistoryService.endDate);
         historyDao.create(historyEntity);
-
         return new CreateResponse(id);
     }
 
@@ -121,7 +118,7 @@ public class EmployeeEntityServiceImpl implements EmployeeEntityService{
         EmployeeEntity employee = employeeDao.getEntityById(transferEmployeeRequest.getEmployeeId());
         employee.setDepartment(dep);
         employeeDao.update(employee);
-        HistoryEntity historyEntity = historyService.historyEntityPrev(employee.getId(),HistoryService.endDate);
+        HistoryEntity historyEntity = historyService.historyEntityPrev(employee.getId(), HistoryService.endDate);
         historyEntity.setDateEnd(new Date());
         historyDao.update(historyEntity);
         HistoryEntity currentChange = new HistoryEntity();
