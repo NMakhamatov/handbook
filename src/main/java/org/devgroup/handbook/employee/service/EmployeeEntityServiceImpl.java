@@ -8,21 +8,37 @@ import org.devgroup.handbook.employee.view.CreateEmployee;
 import org.devgroup.handbook.employee.view.TransferEmployee;
 import org.devgroup.handbook.employee.view.response.CreateResponse;
 import org.devgroup.handbook.exception.exceptions.EmployeeException;
+import org.devgroup.handbook.history.HistoryDao;
+import org.devgroup.handbook.history.HistoryEntity;
+import org.devgroup.handbook.history.HistoryService;
 import org.devgroup.handbook.position.model.PositionEntity;
 import org.devgroup.handbook.util.EntityDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+
 //@EnableTransactionManagement
 @Service
 public class EmployeeEntityServiceImpl implements EmployeeEntityService{
 
+
     private EntityDao<EmployeeEntity,Long> employeeDao;
     private EntityDao<PositionEntity,Long> positionDao;
     private EntityDao<DepartmentEntity,Long> departmentDao;
+    private HistoryDao historyDao;
+    private HistoryService historyService;
 
+    @Autowired
+    public void setHistoryService(HistoryService historyService) {
+        this.historyService = historyService;
+    }
 
+    @Autowired
+    public void setHistoryDao(HistoryDao historyDao) {
+        this.historyDao = historyDao;
+    }
 
     @Autowired
     public void setPositionDao(EntityDao<PositionEntity, Long> positionDao) {
@@ -86,6 +102,12 @@ public class EmployeeEntityServiceImpl implements EmployeeEntityService{
         employee.setGender(createEmployeeRequest.getGender());
         employee.setGrade(createEmployeeRequest.getGrade());
         Long id = employeeDao.create(employee);
+        HistoryEntity historyEntity = new HistoryEntity();
+        historyEntity.setEvent("Наняли сотрудника " +createEmployeeRequest.getName()+" "+createEmployeeRequest.getSurname()+" "+createEmployeeRequest.getPatronymic());
+        historyEntity.setEmployee(employeeDao.getEntityById(id));
+        historyEntity.setDateStart(new Date());
+        historyEntity.setDateEnd(HistoryService.endDate);
+        historyDao.create(historyEntity);
         return new CreateResponse(id);
     }
 
@@ -97,6 +119,16 @@ public class EmployeeEntityServiceImpl implements EmployeeEntityService{
         EmployeeEntity employee = employeeDao.getEntityById(transferEmployeeRequest.getEmployeeId());
         employee.setDepartment(dep);
         employeeDao.update(employee);
+        HistoryEntity historyEntity = historyService.historyEntityPrev(employee.getId(),HistoryService.endDate);
+        historyEntity.setDateEnd(new Date());
+        historyDao.update(historyEntity);
+        HistoryEntity currentChange = new HistoryEntity();
+        currentChange.setEvent("Сотрудник "+employee.getName()+" "+employee.getSurname()+" "+employee.getPatronymic()
+        +" переведен в отдел "+transferEmployeeRequest.getDepIdTo());
+        currentChange.setEmployee(employee);
+        currentChange.setDateStart(new Date());
+        currentChange.setDateEnd(HistoryService.endDate);
+        historyDao.create(currentChange);
     }
 
     //good
