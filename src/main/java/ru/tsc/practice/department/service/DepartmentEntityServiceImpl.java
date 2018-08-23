@@ -54,19 +54,18 @@ public class DepartmentEntityServiceImpl implements DepartmentEntityService {
     @Override
     public List<DepartmentEntityDto> searchListBranches(long id) {
         List<DepartmentEntity> listOfDepartment;
-//
-//            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-//            CriteriaQuery<DepartmentEntity> departmentQuery = criteriaBuilder.createQuery(DepartmentEntity.class);
-//            Root<DepartmentEntity> depRoot = departmentQuery.from(DepartmentEntity.class);
-//            departmentQuery.where(criteriaBuilder.equal(depRoot.get("parentDepartment"), id));
-//            listOfDepartment = entityManager.createQuery(departmentQuery).getResultList();
-//
-            List<DepartmentEntityDto> result = new ArrayList<>();
-//            for(DepartmentEntity d : listOfDepartment)
-//            {
-//                DepartmentEntityDto departmentEntityDto = new DepartmentEntityDto(d.getName(),d.getHeadEmployee().getName(),d.getParentDepartment().getName());
-//                result.add(departmentEntityDto);
-//            }
+
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<DepartmentEntity> departmentQuery = criteriaBuilder.createQuery(DepartmentEntity.class);
+            Root<DepartmentEntity> depRoot = departmentQuery.from(DepartmentEntity.class);
+            departmentQuery.where(criteriaBuilder.equal(depRoot.get("parentDepartment"), id));
+            listOfDepartment = entityManager.createQuery(departmentQuery).getResultList();
+          List<DepartmentEntityDto> result = new ArrayList<>();
+            for(DepartmentEntity d : listOfDepartment)
+            {
+                DepartmentEntityDto departmentEntityDto = new DepartmentEntityDto(d.getName(),d.getHeadEmployee().getName(),d.getParentDepartment().getName());
+                result.add(departmentEntityDto);
+            }
         return result;
     }
 
@@ -126,6 +125,18 @@ public class DepartmentEntityServiceImpl implements DepartmentEntityService {
             if (department.getHeadEmployee()!= null) dto.setManagerName(department.getHeadEmployee().getName());
             if (department.getParentDepartment() != null) dto.setParentDepartment(department.getParentDepartment().getName());
         return dto;
+    }
+
+    public void setManager(Long depId,Long empId)
+    {
+        DepartmentEntity departmentEntity = departmentDao.getEntityById(depId);
+        EmployeeEntity manager = employeeDao.getEntityById(empId);
+        if(manager==null||!manager.getActive())
+        {
+            throw new DepartmentException("Сотрудника с таким id не существует.");
+        }
+        departmentEntity.setHeadEmployee(manager);
+        departmentDao.update(departmentEntity);
     }
 
 

@@ -72,6 +72,7 @@ public class DepartmentEntityControllerImpl implements DepartmentEntityControlle
     @PutMapping(value = "/setmanager")
     public ResponseEntity setManagertoDep(@RequestBody SetManagerRequest request)
     {
-        return null;
+        departmentService.setManager(request.getDepId(),request.getManagerId());
+        return new ResponseEntity<>(new CustomSuccessResponse(), HttpStatus.OK);
     }
 }

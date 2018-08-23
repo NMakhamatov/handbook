@@ -21,4 +21,6 @@ public interface DepartmentEntityService {
     List<EmployeeEntity> getListEmployeeOfDepartment(long id);
 
     DepartmentEntityDto searchDepartmentById(long id);
+
+    void setManager(Long depId,Long empId);
 }

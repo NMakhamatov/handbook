@@ -62,6 +62,7 @@ public class HistoryService {
             dto.setDepartmentName(h.getEmployee().getDepartment().getName());
             dto.setPositionName(h.getEmployee().getPosition().getName());
             dto.setGender(Integer.toString(h.getEmployee().getGender()));
+            dto.setActive(h.getEmployee().getActive());
             HistoryDto historyDto = new HistoryDto(h.getEvent(),h.getDateStart(),h.getDateEnd(),dto);
             result.add(historyDto);
         }

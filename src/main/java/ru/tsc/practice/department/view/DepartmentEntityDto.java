@@ -5,7 +5,14 @@ public class DepartmentEntityDto {
     private String managerName;
     private String parentDepartment;
 
-    public DepartmentEntityDto(){}
+    public DepartmentEntityDto(String name, String managerName, String parentDepartment) {
+        this.name = name;
+        this.managerName = managerName;
+        this.parentDepartment = parentDepartment;
+    }
+
+    public DepartmentEntityDto() {
+    }
 
     public String getName() {
         return name;
