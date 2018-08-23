@@ -54,19 +54,19 @@ public class DepartmentEntityServiceImpl implements DepartmentEntityService {
     @Override
     public List<DepartmentEntityDto> searchListBranches(long id) {
         List<DepartmentEntity> listOfDepartment;
-
-            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-            CriteriaQuery<DepartmentEntity> departmentQuery = criteriaBuilder.createQuery(DepartmentEntity.class);
-            Root<DepartmentEntity> depRoot = departmentQuery.from(DepartmentEntity.class);
-            departmentQuery.where(criteriaBuilder.equal(depRoot.get("parentDepartment"), id));
-            listOfDepartment = entityManager.createQuery(departmentQuery).getResultList();
-
+//
+//            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+//            CriteriaQuery<DepartmentEntity> departmentQuery = criteriaBuilder.createQuery(DepartmentEntity.class);
+//            Root<DepartmentEntity> depRoot = departmentQuery.from(DepartmentEntity.class);
+//            departmentQuery.where(criteriaBuilder.equal(depRoot.get("parentDepartment"), id));
+//            listOfDepartment = entityManager.createQuery(departmentQuery).getResultList();
+//
             List<DepartmentEntityDto> result = new ArrayList<>();
-            for(DepartmentEntity d : listOfDepartment)
-            {
-                DepartmentEntityDto departmentEntityDto = new DepartmentEntityDto(d.getName(),d.getHeadEmployee().getName(),d.getParentDepartment().getName());
-                result.add(departmentEntityDto);
-            }
+//            for(DepartmentEntity d : listOfDepartment)
+//            {
+//                DepartmentEntityDto departmentEntityDto = new DepartmentEntityDto(d.getName(),d.getHeadEmployee().getName(),d.getParentDepartment().getName());
+//                result.add(departmentEntityDto);
+//            }
         return result;
     }
 
@@ -121,10 +121,11 @@ public class DepartmentEntityServiceImpl implements DepartmentEntityService {
     @Override
     public DepartmentEntityDto searchDepartmentById(long id) {
         DepartmentEntity department = departmentDao.getEntityById(id);
-        DepartmentEntityDto departmentEntityDto = new DepartmentEntityDto(department.getName()
-                ,department.getHeadEmployee().getName()
-                ,department.getParentDepartment().getName());
-        return departmentEntityDto;
+        DepartmentEntityDto dto = new DepartmentEntityDto();
+            dto.setName(department.getName());
+            if (department.getHeadEmployee()!= null) dto.setManagerName(department.getHeadEmployee().getName());
+            if (department.getParentDepartment() != null) dto.setParentDepartment(department.getParentDepartment().getName());
+        return dto;
     }
 
 

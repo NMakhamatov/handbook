@@ -9,6 +9,7 @@ public class EmployeeDto {
     private String positionName;
     private String gender;
     private String birthDate;
+    private Boolean isActive;
 
     public Long getId() {
         return id;
@@ -72,5 +73,13 @@ public class EmployeeDto {
 
     public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public Boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 }

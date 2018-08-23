@@ -145,39 +145,11 @@ public class EmployeeEntityServiceImpl implements EmployeeEntityService{
             employee.setPosition(position);
         } if (changeEmployeeRequest.getSalary() != null) employee.setSalary(changeEmployeeRequest.getSalary());
         employeeDao.update(employee);
-        HistoryEntity historyEntity = historyService.historyEntityPrev(employee.getId(),HistoryService.endDate);
-        historyEntity.setDateEnd(new Date());
-        historyDao.update(historyEntity);
-
-        HistoryEntity entity = new HistoryEntity();
-        entity.setEvent("Внесены изменения о сотруднике : "+
-        changeEmployeeRequest.getName()+" "+
-        changeEmployeeRequest.getSurName()+" "+
-        changeEmployeeRequest.getPatronymic()+" "+
-        changeEmployeeRequest.getGender()+" "+
-        changeEmployeeRequest.getGrade()+" "+
-        changeEmployeeRequest.getPositionId()+" "+
-        changeEmployeeRequest.getSalary());
-        entity.setDateStart(new Date());
-        entity.setDateEnd(HistoryService.endDate);
-        entity.setEmployee(employee);
-        historyDao.create(entity);
     }
 
     @Override
     public void removeEmployee(long id) {
         EmployeeEntity entity = employeeDao.getEntityById(id);
-
-        HistoryEntity historyEntity = historyService.historyEntityPrev(entity.getId(),HistoryService.endDate);
-        historyEntity.setDateEnd(new Date());
-        historyDao.update(historyEntity);
-
-        String info = entity.getName()+" "+entity.getSurname()+" "+entity.getPatronymic();
         employeeDao.delete(entity);
-
-        HistoryEntity currentChange = new HistoryEntity();
-        currentChange.setEvent("Сотрудник "+info+" был уволен.");
-        //currentChange.setEmployee();
-
     }
 }

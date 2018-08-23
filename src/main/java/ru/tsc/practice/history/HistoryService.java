@@ -44,7 +44,7 @@ public class HistoryService {
     }
 
 
-    public List<HistoryDto> empHistory(long id){
+    public List<HistoryDto> empHistory(long id){ //todo: Argen-> add isActive field in "/{id}/history" mapping
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<HistoryEntity> criteriaQuery = criteriaBuilder.createQuery(HistoryEntity.class);
         Root<HistoryEntity> root = criteriaQuery.from(HistoryEntity.class);
