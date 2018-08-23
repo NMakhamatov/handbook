@@ -7,7 +7,7 @@ import ru.tsc.practice.department.view.DepartmentEntityDto;
 import ru.tsc.practice.department.view.Reassignment;
 
 
-
+import ru.tsc.practice.department.view.SetManagerRequest;
 import ru.tsc.practice.util.CustomDataOut;
 import ru.tsc.practice.util.CustomSuccessResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,5 +67,11 @@ public class DepartmentEntityControllerImpl implements DepartmentEntityControlle
 //        System.out.println("КОНТРОЛЛЕР: СМЕНА РОДИТЕЛЬНОСКОГО ОТДЕЛА");
         departmentService.reassignDepartment(reassignment);
         return new ResponseEntity<>(new CustomSuccessResponse(),HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/setmanager")
+    public ResponseEntity setManagertoDep(@RequestBody SetManagerRequest request)
+    {
+        return null;
     }
 }

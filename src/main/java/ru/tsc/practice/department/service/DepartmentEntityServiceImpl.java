@@ -79,7 +79,7 @@ public class DepartmentEntityServiceImpl implements DepartmentEntityService {
 //            throw new DepartmentException("Не существует такого родительского департамента");
 //        }
         EmployeeEntity manager = employeeDao.getEntityById(createDepartmentRequest.getHead());
-        if(manager==null)
+        if(!manager.getActive())
         {
             throw new DepartmentException("Не существует такого работника.");
         }
@@ -104,7 +104,6 @@ public class DepartmentEntityServiceImpl implements DepartmentEntityService {
             throw new DepartmentException("Не существует департамента которому нужно переподчинить отдел.");
         depToReassign.setParentDepartment(newParentDep);
         departmentDao.update(depToReassign);
-
     }
 
     @Override
@@ -112,7 +111,9 @@ public class DepartmentEntityServiceImpl implements DepartmentEntityService {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<EmployeeEntity> criteriaQuery = criteriaBuilder.createQuery(EmployeeEntity.class);
         Root<EmployeeEntity> employeeRoot = criteriaQuery.from(EmployeeEntity.class);
-        criteriaQuery.where(criteriaBuilder.equal(employeeRoot.get("department"), id));
+        criteriaQuery.select(employeeRoot);
+        criteriaQuery.where(criteriaBuilder.and(criteriaBuilder.equal(employeeRoot.get("department"),id),
+                criteriaBuilder.equal(employeeRoot.get("isActive"),true)));
         List<EmployeeEntity> listOfEmployee = employeeDao.getWithCriteria(criteriaQuery).getResultList();
         return listOfEmployee;
     }
@@ -125,4 +126,6 @@ public class DepartmentEntityServiceImpl implements DepartmentEntityService {
                 ,department.getParentDepartment().getName());
         return departmentEntityDto;
     }
+
+
 }
