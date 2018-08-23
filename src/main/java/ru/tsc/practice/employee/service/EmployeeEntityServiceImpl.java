@@ -78,17 +78,20 @@ public class EmployeeEntityServiceImpl implements EmployeeEntityService{
         if ((createEmployeeRequest.getGender()) != 0
                 && (createEmployeeRequest.getGender()) != 1) exceptionText+="не указан пол; ";
         if ((createEmployeeRequest.getGrade()) == null) exceptionText+="не указан грейд; ";
-        if ((createEmployeeRequest.getIdDepartment()) == null) exceptionText+="не указана департамент; ";
+//        if ((createEmployeeRequest.getIdDepartment()) == null) exceptionText+="не указан департамент; ";
         if ((createEmployeeRequest.getIdPosition()) == null) exceptionText+="не указана должность; ";
         if ((createEmployeeRequest.getSalary()) == null) exceptionText+="не указана зарплата; ";
 
         if (!((exceptionText).equals(""))) throw new EmployeeException(exceptionText);
 
         PositionEntity position = positionDao.getEntityById(createEmployeeRequest.getIdPosition());
-        DepartmentEntity department = departmentDao.getEntityById(createEmployeeRequest.getIdDepartment());
 
+        DepartmentEntity department = null;
+        if (createEmployeeRequest.getIdDepartment() != null) {
+            department = departmentDao.getEntityById(createEmployeeRequest.getIdDepartment());
+        }
         if (position == null) throw new RuntimeException("не найдена должность");
-        if (department == null) throw new RuntimeException("не найден департамент");
+//        if (department == null) throw new RuntimeException("не найден департамент");
 
         EmployeeEntity employee = new EmployeeEntity();
         employee.setName(createEmployeeRequest.getName());
@@ -96,10 +99,11 @@ public class EmployeeEntityServiceImpl implements EmployeeEntityService{
         employee.setBirthDate(createEmployeeRequest.getBirthDate());
         employee.setPatronymic(createEmployeeRequest.getPatronymic());
         employee.setPosition(position);
-        employee.setDepartment(department);
+        if (department != null) employee.setDepartment(department);
         employee.setSalary(createEmployeeRequest.getSalary());
         employee.setGender(createEmployeeRequest.getGender());
         employee.setGrade(createEmployeeRequest.getGrade());
+        employee.setActive(true);
         Long id = employeeDao.create(employee);
         HistoryEntity historyEntity = new HistoryEntity();
         historyEntity.setEvent("Наняли сотрудника " +createEmployeeRequest.getName()+" "+createEmployeeRequest.getSurname()+" "+createEmployeeRequest.getPatronymic());
@@ -148,8 +152,13 @@ public class EmployeeEntityServiceImpl implements EmployeeEntityService{
     }
 
     @Override
+    @Transactional
     public void removeEmployee(long id) {
         EmployeeEntity entity = employeeDao.getEntityById(id);
-        employeeDao.delete(entity);
+        System.out.println(entity.getActive());
+        entity.setActive(false);
+        employeeDao.update(entity);
+        System.out.println(entity.getActive());
+//        employeeDao.delete(entity);
     }
 }

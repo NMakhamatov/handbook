@@ -2,7 +2,6 @@ package ru.tsc.practice.employee.view;
 
 public class TransferEmployee {
     private long employeeId;
-//    private long depIdFrom; //todo: is redundant?
     private long depIdTo;
 
     public long getEmployeeId() {
@@ -12,14 +11,6 @@ public class TransferEmployee {
     public void setEmployeeId(long employeeId) {
         this.employeeId = employeeId;
     }
-
-//    public long getDepIdFrom() {
-//        return depIdFrom;
-//    }
-//
-//    public void setDepIdFrom(long depIdFrom) {
-//        this.depIdFrom = depIdFrom;
-//    }
 
     public long getDepIdTo() {
         return depIdTo;

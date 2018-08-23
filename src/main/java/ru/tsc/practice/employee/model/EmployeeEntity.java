@@ -41,7 +41,7 @@ public class EmployeeEntity {
     @ManyToOne(
             fetch = FetchType.EAGER
     )
-    @JoinColumn(name = "department", nullable = false)
+    @JoinColumn(name = "department")
     private DepartmentEntity department;
 
     @NotNull
@@ -61,7 +61,7 @@ public class EmployeeEntity {
     private BigDecimal salary;
 
     @NotNull
-    @Column(nullable = false)
+    @Column(name = "is_active",nullable = false)
     private Boolean isActive;
 
     public long getId() {

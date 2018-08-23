@@ -12,14 +12,24 @@ import ru.tsc.practice.employee.view.CreateEmployee;
 import ru.tsc.practice.employee.view.EmployeeDto;
 import ru.tsc.practice.employee.view.TransferEmployee;
 import ru.tsc.practice.employee.view.response.CreateResponse;
+import ru.tsc.practice.history.HistoryDto;
+import ru.tsc.practice.history.HistoryService;
 import ru.tsc.practice.util.CustomDataOut;
 import ru.tsc.practice.util.CustomSuccessResponse;
+
+import java.util.List;
 
 
 @RestController
 @RequestMapping(value = "api/employee/")
 public class EmployeeEntityControllerImpl implements EmployeeEntityController {
     private EmployeeEntityService employeeService;
+
+    private HistoryService historyService;
+    @Autowired
+    public void setHistoryService(HistoryService historyService) {
+        this.historyService = historyService;
+    }
 
     @Autowired
     public EmployeeEntityControllerImpl(EmployeeEntityService employeeService) {
@@ -41,6 +51,7 @@ public class EmployeeEntityControllerImpl implements EmployeeEntityController {
         dto.setDepartmentName(employee.getDepartment().getName());
         dto.setPositionName(employee.getPosition().getName());
         dto.setGender(Integer.toString(employee.getGender()));
+        dto.setActive(employee.getActive());
 
         CustomDataOut<EmployeeDto> dataOut = new CustomDataOut<>(dto);
         return new ResponseEntity<CustomDataOut>(dataOut,HttpStatus.OK);
@@ -79,5 +90,11 @@ public class EmployeeEntityControllerImpl implements EmployeeEntityController {
     public ResponseEntity removeEmployee(@PathVariable Long id) {
         employeeService.removeEmployee(id);
         return new ResponseEntity<>(new CustomSuccessResponse(),HttpStatus.OK);
+    }
+    @GetMapping(value = "/{id}/history")
+    public ResponseEntity history(@PathVariable Long id) {
+        List<HistoryDto> dto = historyService.empHistory(id);
+        CustomDataOut<List<HistoryDto>> dataOut = new CustomDataOut<>(dto);
+        return new ResponseEntity<CustomDataOut>(dataOut,HttpStatus.OK);
     }
 }

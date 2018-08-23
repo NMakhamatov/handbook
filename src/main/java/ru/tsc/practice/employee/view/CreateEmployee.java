@@ -80,7 +80,6 @@ public class CreateEmployee {
         salary = salary.setScale(2,BigDecimal.ROUND_HALF_UP);
         this.salary = salary;
         this.salary = this.salary.setScale(2,BigDecimal.ROUND_HALF_UP);
-
     }
 
     public List<Certificate> getCertificates() {
@@ -103,7 +102,6 @@ public class CreateEmployee {
 //    @NonNull
     @NotNull
     private Date birthDate;
-//    @NonNull
     @NotNull
     private Long idDepartment;
 //    @NonNull
@@ -115,5 +113,4 @@ public class CreateEmployee {
     @NotNull
     private BigDecimal salary;
     private List<Certificate> certificates;
-
 }
