@@ -60,6 +60,10 @@ public class EmployeeEntity {
     @Column(name = "salary", nullable = false)
     private BigDecimal salary;
 
+    @NotNull
+    @Column(nullable = false)
+    private Boolean isActive;
+
     public long getId() {
         return id;
     }
@@ -139,4 +143,8 @@ public class EmployeeEntity {
     public void setSalary(BigDecimal salary) {
         this.salary = salary;
     }
+
+    public Boolean getActive() { return isActive; }
+
+    public void setActive(Boolean active) { isActive = active; }
 }
