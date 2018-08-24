@@ -61,9 +61,16 @@ public class DepartmentEntityServiceImpl implements DepartmentEntityService {
             departmentQuery.where(criteriaBuilder.equal(depRoot.get("parentDepartment"), id));
             listOfDepartment = entityManager.createQuery(departmentQuery).getResultList();
           List<DepartmentEntityDto> result = new ArrayList<>();
-            for(DepartmentEntity d : listOfDepartment)
-            {
-                DepartmentEntityDto departmentEntityDto = new DepartmentEntityDto(d.getName(),d.getHeadEmployee().getName(),d.getParentDepartment().getName());
+            for(DepartmentEntity d : listOfDepartment) {
+                DepartmentEntityDto departmentEntityDto = new DepartmentEntityDto();
+                if (d.getParentDepartment() != null) {
+                    departmentEntityDto.setParentDepartment(d.getParentDepartment().getName());
+                }
+                if (d.getHeadEmployee() != null)
+                {
+                    departmentEntityDto.setManagerName(d.getHeadEmployee().getName());
+                }
+                departmentEntityDto.setName(d.getName());
                 result.add(departmentEntityDto);
             }
         return result;
