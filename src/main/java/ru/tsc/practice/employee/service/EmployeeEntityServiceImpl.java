@@ -135,21 +135,56 @@ public class EmployeeEntityServiceImpl implements EmployeeEntityService{
     @Transactional
     public void changeEmployee(ChangeEmployee changeEmployeeRequest) {
         EmployeeEntity employee = employeeDao.getEntityById(changeEmployeeRequest.getEmployeeId());
-        if (changeEmployeeRequest.getName() != null) employee.setName(changeEmployeeRequest.getName());
-        if (changeEmployeeRequest.getSurName() != null) employee.setSurname(changeEmployeeRequest.getSurName());
-        if (changeEmployeeRequest.getPatronymic() != null) employee.setPatronymic(changeEmployeeRequest.getPatronymic());
-        if (changeEmployeeRequest.getGender() == 0 || changeEmployeeRequest.getGender()==1) employee.setGender(changeEmployeeRequest.getGender());
-        if (changeEmployeeRequest.getGrade() != 0) employee.setGrade(changeEmployeeRequest.getGrade());
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Сотрудник изменил характеристики : ");
+        if (changeEmployeeRequest.getName() != null)
+        {employee.setName(changeEmployeeRequest.getName());
+          stringBuilder.append(changeEmployeeRequest.getName()+", ");
+        }
+        if (changeEmployeeRequest.getSurName() != null){ employee.setSurname(changeEmployeeRequest.getSurName());
+            stringBuilder.append(changeEmployeeRequest.getSurName()+", ");
+        }
+        if (changeEmployeeRequest.getPatronymic() != null)
+        {employee.setPatronymic(changeEmployeeRequest.getPatronymic()+", ");
+        stringBuilder.append(changeEmployeeRequest.getPatronymic());
+        }
+        if (changeEmployeeRequest.getGender() == 0 || changeEmployeeRequest.getGender()==1){ employee.setGender(changeEmployeeRequest.getGender());
+        stringBuilder.append(changeEmployeeRequest.getGender()+", ");
+        }
+        if (changeEmployeeRequest.getGrade() != 0) {employee.setGrade(changeEmployeeRequest.getGrade());
+            stringBuilder.append(changeEmployeeRequest.getGrade()+", ");
+        }
         if (changeEmployeeRequest.getPositionId() != 0 ) {
             PositionEntity position = positionDao.getEntityById(changeEmployeeRequest.getPositionId());
             employee.setPosition(position);
-        } if (changeEmployeeRequest.getSalary() != null) employee.setSalary(changeEmployeeRequest.getSalary());
+            stringBuilder.append(position.getName()+", ");
+        } if (changeEmployeeRequest.getSalary() != null) {employee.setSalary(changeEmployeeRequest.getSalary());
+
+stringBuilder.append(changeEmployeeRequest.getSalary());}
         employeeDao.update(employee);
+        HistoryEntity prev = historyService.historyEntityPrev(employee.getId(),HistoryService.endDate);
+        prev.setDateEnd(new Date());
+
+        HistoryEntity historyEntity = new HistoryEntity();
+        historyEntity.setDateStart(new Date());
+        historyEntity.setDateEnd(HistoryService.endDate);
+        historyEntity.setEmployee(employee);
+        historyEntity.setEvent(stringBuilder.toString());
+        historyDao.create(historyEntity);
     }
 
     @Override
+    @Transactional
     public void removeEmployee(long id) {
         EmployeeEntity entity = employeeDao.getEntityById(id);
         employeeDao.delete(entity);
+        HistoryEntity prev = historyService.historyEntityPrev(id,HistoryService.endDate);
+        prev.setDateEnd(new Date());
+        HistoryEntity historyEntity = new HistoryEntity();
+        historyEntity.setDateStart(new Date());
+        historyEntity.setDateEnd(HistoryService.endDate);
+        historyEntity.setEmployee(entity);
+        historyEntity.setEvent("Сотрудник "+entity.getName()+" "+entity.getSurname()+" "+entity.getPatronymic()+" уволен.");
+        historyDao.create(historyEntity);
     }
 }
